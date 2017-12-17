@@ -10,12 +10,12 @@ public class Profesores extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_estudiantes);
+        setContentView(R.layout.activity_profesores);
         this.nombre = (EditText) findViewById(R.id.nombre);
         this.edad = (EditText) findViewById(R.id.edad);
         this.ciclo = (EditText) findViewById(R.id.ciclo);
         this.curso = (EditText) findViewById(R.id.curso);
-        this.despacho = (EditText) findViewById(R.id.nota);
+        this.despacho = (EditText) findViewById(R.id.despacho);
         this.id = (EditText) findViewById(R.id.id);
     }
 

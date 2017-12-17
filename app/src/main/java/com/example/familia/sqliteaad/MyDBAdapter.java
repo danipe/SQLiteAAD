@@ -9,6 +9,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.familia.sqliteaad.Modelo.Estudiante;
+import com.example.familia.sqliteaad.Modelo.Profesor;
+
+import java.util.ArrayList;
+
 /**
  * Created by yo.
  */
@@ -34,7 +39,7 @@ public class MyDBAdapter {
         context = c;
         dbHelper = new MyDbHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
         open();
-        consultarEstudiantes();
+        consultarEstudiantes("SELECT * FROM estudiantes;");
     }
 
     public void open(){
@@ -80,18 +85,47 @@ public class MyDBAdapter {
         Toast.makeText(context, "Profesor "+nombre+" añadido", Toast.LENGTH_SHORT).show();
     }
 
-    public void consultarEstudiantes() {
-        
-        Cursor c = db.rawQuery("SELECT * FROM estudiantes; ", null);
+    public ArrayList<Estudiante> consultarEstudiantes(String sql) {
+        db = dbHelper.getReadableDatabase();
+        //_id integer primary key autoincrement, nombre text, edad integer, ciclo text, curso text, nota integer
+        //String nombre, String ciclo, String curso, int nota, int edad
+        ArrayList<Estudiante> estudiantes = new ArrayList<Estudiante>();
+        Cursor c = db.rawQuery(sql, null);
         if (c.moveToFirst()){
             do {
-                // Passing values
-                Log.e("consulta estudiantes", c.getString(0)+", "+c.getString(1));
-                // Do something Here with values
+                Log.e("consulta", c.getString(1));
+                estudiantes.add(new Estudiante(
+                        c.getString(1),
+                        c.getString(3),
+                        c.getString(4),
+                        Integer.parseInt(c.getString(5)),
+                        Integer.parseInt(c.getString(2))));
             } while(c.moveToNext());
         }
         c.close();
         db.close();
+        return estudiantes;
+    }
+
+    public ArrayList<Profesor> consultarProfesores(String sql) {
+        db = dbHelper.getReadableDatabase();
+        //_id integer primary key autoincrement, nombre text, edad integer, ciclo text, curso text, despacho text
+        //String nombre, String ciclo, String curso, int nota, int edad
+        ArrayList<Profesor> profesores = new ArrayList<Profesor>();
+        Cursor c = db.rawQuery(sql, null);
+        if (c.moveToFirst()){
+            do {
+                profesores.add(new Profesor(
+                        c.getString(1),
+                        c.getString(3),
+                        c.getString(4),
+                        c.getString(5),
+                        c.getInt(2)));
+            } while(c.moveToNext());
+        }
+        c.close();
+        db.close();
+        return profesores;
     }
 
     public void eliminarEstudiante(int id) {
@@ -119,7 +153,8 @@ public class MyDBAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(DATABASE_CREATE);
+            db.execSQL("CREATE TABLE estudiantes (_id integer primary key autoincrement, nombre text, edad integer, ciclo text, curso text, nota integer);");
+            db.execSQL("CREATE TABLE profesores (_id integer primary key autoincrement, nombre text, edad integer, ciclo text, curso text, despacho text);");
         }
 
         @Override

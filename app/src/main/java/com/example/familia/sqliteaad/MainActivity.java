@@ -21,8 +21,18 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void mostrarEstudiantes(View v) {
+        Intent i = new Intent(this,ConsultaEstudiantes.class);
+        startActivity(i);
+    }
+
     public void profesores(View v) {
         Intent i = new Intent(this,Profesores.class);
+        startActivity(i);
+    }
+
+    public void mostrarProfesores(View v) {
+        Intent i = new Intent(this,ConsultaProfesores.class);
         startActivity(i);
     }
 

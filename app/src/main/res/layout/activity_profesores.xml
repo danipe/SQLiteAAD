@@ -45,12 +45,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="reestablecer"
-                android:layout_gravity="left"/>
+                android:layout_gravity="left"
+                android:onClick="reestablecerProfesor"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="insertar"
-                android:layout_gravity="right"/>
+                android:text="insertar profesor"
+                android:layout_gravity="right"
+                android:onClick="insertarProfesor"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
