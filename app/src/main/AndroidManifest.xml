@@ -19,6 +19,8 @@
         <activity android:name=".Estudiantes" />
         <activity android:name=".ConsultaEstudiantes" />
         <activity android:name=".ConsultaProfesores" />
+        <activity android:name=".Asignaturas" />
+        <activity android:name=".ConsultaAsignatura"></activity>
     </application>
 
 </manifest>

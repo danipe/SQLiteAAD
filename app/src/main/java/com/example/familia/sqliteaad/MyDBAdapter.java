@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.familia.sqliteaad.Modelo.Asignatura;
 import com.example.familia.sqliteaad.Modelo.Estudiante;
 import com.example.familia.sqliteaad.Modelo.Profesor;
 
@@ -85,6 +86,15 @@ public class MyDBAdapter {
         Toast.makeText(context, "Profesor "+nombre+" añadido", Toast.LENGTH_SHORT).show();
     }
 
+    public void insertarAsignatura(String nombre, int horas) {
+        db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nombre",nombre);
+        contentValues.put("horas", horas);
+        db.insert("asignaturas", null, contentValues);
+        Toast.makeText(context, "Asignatura "+nombre+" añadida", Toast.LENGTH_SHORT).show();
+    }
+
     public ArrayList<Estudiante> consultarEstudiantes(String sql) {
         db = dbHelper.getReadableDatabase();
         //_id integer primary key autoincrement, nombre text, edad integer, ciclo text, curso text, nota integer
@@ -105,6 +115,25 @@ public class MyDBAdapter {
         c.close();
         db.close();
         return estudiantes;
+    }
+
+    public ArrayList<Asignatura> consultarAsginaturas(String sql) {
+        db = dbHelper.getReadableDatabase();
+        //_id integer primary key autoincrement, nombre text, edad integer, ciclo text, curso text, nota integer
+        //String nombre, String ciclo, String curso, int nota, int edad
+        ArrayList<Asignatura> asignaturas = new ArrayList<Asignatura>();
+        Cursor c = db.rawQuery(sql, null);
+        if (c.moveToFirst()){
+            do {
+                Log.e("consulta", c.getString(1));
+                asignaturas.add(new Asignatura(
+                        c.getString(1),
+                        Integer.parseInt(c.getString(2))));
+            } while(c.moveToNext());
+        }
+        c.close();
+        db.close();
+        return asignaturas;
     }
 
     public ArrayList<Profesor> consultarProfesores(String sql) {
@@ -134,11 +163,19 @@ public class MyDBAdapter {
         Toast.makeText(context, "Estudiante "+id+" eliminado", Toast.LENGTH_SHORT).show();
     }
 
+    public void eliminarAsignatura(int id) {
+        db = dbHelper.getWritableDatabase();
+        db.delete("asignaturas", "_id="+id, null);
+        Toast.makeText(context, "Asignatura "+id+" eliminada", Toast.LENGTH_SHORT).show();
+    }
+
     public void eliminarProfesor(int id) {
         db = dbHelper.getWritableDatabase();
         db.delete("profesores", "_id="+id, null);
         Toast.makeText(context, "Profesor "+id+" eliminado", Toast.LENGTH_SHORT).show();
     }
+
+
 
     public void eliminarDB() {
         context.deleteDatabase(DATABASE_NAME);
@@ -155,6 +192,7 @@ public class MyDBAdapter {
         public void onCreate(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE estudiantes (_id integer primary key autoincrement, nombre text, edad integer, ciclo text, curso text, nota integer);");
             db.execSQL("CREATE TABLE profesores (_id integer primary key autoincrement, nombre text, edad integer, ciclo text, curso text, despacho text);");
+            db.execSQL("CREATE TABLE asignaturas (_id integer primary key autoincrement, nombre text, horas integer);");
         }
 
         @Override

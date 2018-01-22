@@ -52,6 +52,26 @@
                 android:layout_gravity="center"
                 android:onClick="mostrarProfesores"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:padding="25dp"
+            android:orientation="vertical"
+            android:gravity="center">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="asignaturas"
+                android:layout_gravity="center"
+                android:onClick="asignaturas"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="consultar asignaturas"
+                android:layout_gravity="center"
+                android:onClick="mostrarAsignaturas"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
